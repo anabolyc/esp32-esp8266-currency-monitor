@@ -40,8 +40,6 @@ int start2 = 25;
 String buttons2[3][4] = {{"7", "4", "1", "0"}, {"8", "5", "2", "."}, {"9", "6", "3", "ok"}};
 int cF[3][4] = {{0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10}};
 
-const char *ssid = "wifi-12-private";
-const char *password = "9263777101";
 float amount = 1.00000;
 bool calcStarted = 0;
 bool dataStarted = 0;
@@ -74,27 +72,26 @@ void getData()
 
    if ((WiFi.status() == WL_CONNECTED))
    { //Check the current connection status
-      
+
       String endpoint = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/" + cur[chosen] + ".min.json";
       Serial.printf("-> %s\n", endpoint.c_str());
-      #ifdef ESP32
-      http.begin(endpoint);      //Specify the URL
-      #endif
-      #ifdef ESP8266
-      std::unique_ptr<BearSSL::WiFiClientSecure>client(new BearSSL::WiFiClientSecure);
+#ifdef ESP32
+      http.begin(endpoint); //Specify the URL
+#endif
+#ifdef ESP8266
+      std::unique_ptr<BearSSL::WiFiClientSecure> client(new BearSSL::WiFiClientSecure);
       client->setInsecure();
       http.begin(*client, endpoint);
-      #endif
-      int httpCode = http.GET(); //Make the request
-      if (httpCode > 0) //Check for the returning code
-      { 
-         // #ifdef ESVID_20211220_220307.gifP32
+#endif
+      int httpCode = http.GET();
+      if (httpCode > 0)         
+      {
          String payload = http.getString();
-         Serial.printf("<- %s\n", payload);
+         // Serial.printf("<- %s\n", payload.c_str());
+         Serial.printf("<- %d bytes\n", payload.length());
          char inp[payload.length()];
          payload.toCharArray(inp, payload.length());
          deserializeJson(doc, inp);
-         // #endif
 
          // #ifdef ESP8266
          // deserializeJson(doc, *client);
@@ -120,7 +117,7 @@ void getData()
                tft.drawFloat(p, 5, 180, 62 + j * 26, 2);
                tft.setTextColor(TFT_WHITE, TFT_BLACK);
 
-               Serial.printf(" - %s = %f\n", curNames[i], p);
+               Serial.printf("%s = %f\n", curNames[i].c_str(), p);
                j++;
             }
          }
@@ -152,7 +149,7 @@ void setup()
    for (int i = 0; i < n2; i++)
       posX2[i] = (start2 + (i * boxSize2) + (space2 * i));
 
-   WiFi.begin(ssid, password);
+   WiFi.begin(WIFI_SSID, WIFI_PASS);
    tft.print("connecting");
 
    while (WiFi.status() != WL_CONNECTED)

@@ -10,6 +10,10 @@ I changed the structure of the project to be run as Platformio project, because
 
 I'm working on my own development boards for both listed MCUs and this project is a good demonstration of kind of projects they would happily support
 
+## Configuration
+
+Specify your wifi credentials at the top of [platformio.ini](/platformio.ini) file
+
 ### Demo
 
 ![esp8266](/doc/demo/VID_20211220_235805.gif)
