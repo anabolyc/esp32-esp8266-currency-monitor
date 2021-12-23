@@ -1,4 +1,4 @@
-## ESP32 and ESP8266 fake windows xp port
+## ESP32 and ESP8266 currency exchange rates monitor
 
 This is a joke project made by [VolosR](https://github.com/VolosR/currency240240) that loads and displays selected currency rates.
 
