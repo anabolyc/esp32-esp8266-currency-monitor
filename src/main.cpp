@@ -11,7 +11,6 @@
 #include <WiFiClient.h>
 #include <WiFiClientSecureBearSSL.h>
 #endif
-// #include <vector>
 
 #include <ArduinoJson.h>
 
@@ -122,6 +121,7 @@ void getData()
             }
          }
       }
+      http.end();
    }
 
    fase = 0;
